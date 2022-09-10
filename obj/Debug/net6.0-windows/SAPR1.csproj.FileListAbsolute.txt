@@ -1,0 +1,17 @@
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.exe
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.deps.json
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.runtimeconfig.json
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.pdb
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.AssemblyReference.cache
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Form1.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.GenerateResource.cache
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.AssemblyInfoInputs.cache
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.AssemblyInfo.cs
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.CoreCompileInputs.cache
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.dll
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\refint\SAPR1.dll
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.pdb
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.genruntimeconfig.cache
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\ref\SAPR1.dll
