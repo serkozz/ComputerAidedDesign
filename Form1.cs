@@ -14,8 +14,12 @@ namespace SAPR1
         public Form1()
         {
             InitializeComponent();
+            FillDocumentTuple();
             createTreeOnDiskButton.Enabled = false;
+            addObjectButton.Enabled = false;
             removeObjectButton.Enabled = false;
+            addDocumentButton.Enabled = false;
+            removeDocumentButton.Enabled = false;
         }
 
         private void CreateIfMissing(string path)
@@ -47,14 +51,10 @@ namespace SAPR1
 
         private void createTreeButton_Click(object sender, EventArgs e)
         {
-            if (useObjectStructureCheckBox.Checked)
-            {
-                FillDocumentTuple();
-                TreeCreate(TreeViewType.ObjectTreeView);
-            }
-            else if (!useObjectStructureCheckBox.Checked)
-                TreeCreate(TreeViewType.DocumentTreeView);
+            TreeCreate(TreeViewType.DocumentTreeView, true);
             createTreeOnDiskButton.Enabled = true;
+            addObjectButton.Enabled = true;
+            addDocumentButton.Enabled = true;
         }
 
         private void FillDocumentTuple()
@@ -65,23 +65,41 @@ namespace SAPR1
             DocumentNodeTupleList.Add(("РД", new List<string>() { "ГП", "КЖ"}, Color.Orange));
         }
 
-        private void TreeCreate(TreeViewType treeViewType)
+        private void TreeCreate(TreeViewType treeViewType, bool createBothTrees)
         {
             
-            if (treeViewType == TreeViewType.DocumentTreeView)
+            if (treeViewType == TreeViewType.DocumentTreeView || createBothTrees == true)
             {
                 TreeClear(TreeViewType.DocumentTreeView);
-                AddDocumentRootNode("ИРД", new List<string>() { "ЗУ", "ГПЗУ", "РС", "ТУ", "ПрДекл"}, Color.Green);
-                AddDocumentRootNode("ИИ", new List<string>() { "ИГдИ", "ИГлИ", "ИЭИ"}, Color.Blue);
-                AddDocumentRootNode("ПД", new List<string>() { "ПЗ", "СПОЗУ", "АР", "КР"}, Color.Red);
-                AddDocumentRootNode("РД", new List<string>() { "ГП", "КЖ"}, Color.Orange);
+                AddDocumentRootNode(DocumentNodeTupleList);
                 documentTreeView.ExpandAll();
             }
-            else if (treeViewType == TreeViewType.ObjectTreeView)
+            if (treeViewType == TreeViewType.ObjectTreeView || createBothTrees == true)
             {
                 TreeClear(TreeViewType.ObjectTreeView);
                 AddObjectRootNode($"Объект {ObjectRootNodesCount}", DocumentNodeTupleList);
                 objectTreeView.ExpandAll();
+            }
+        }
+
+        private void AddDocumentRootNode(List<(string documentNodeText, List<string> innerNodesText, Color innerNodesTextColor)> documentNodeTupleList)
+        {
+            for (int i = 0; i <= documentNodeTupleList.Count - 1; i++)
+            {
+                TreeNode rootNode = new TreeNode($"{DocumentRootNodesCount.ToString()}. {documentNodeTupleList[i].documentNodeText}");
+                TreeNode innerNodesCollection = new TreeNode($"{DocumentRootNodesCount.ToString()}.{DocumentObjectNodesCount.ToString()} Объект {DocumentObjectNodesCount.ToString()}");
+
+                int innerIndex = 1; // Номер пункта внутренней ноды 
+
+                foreach (var str in documentNodeTupleList[i].innerNodesText)
+                {
+                    innerNodesCollection.Nodes.Add($"{DocumentRootNodesCount.ToString()}.{DocumentObjectNodesCount.ToString()}.{innerIndex} {str}");
+                    innerIndex++;
+                }
+                ColorNode(innerNodesCollection, documentNodeTupleList[i].innerNodesTextColor);
+                rootNode.Nodes.Add(innerNodesCollection);
+                DocumentRootNodesCount++;
+                documentTreeView.Nodes.Add(rootNode);
             }
         }
 
@@ -97,25 +115,6 @@ namespace SAPR1
                 objectTreeView.Nodes.Clear();
                 ObjectRootNodesCount = 1; ObjectNodesCount = 1;
             }
-        }
-
-        private void AddDocumentRootNode(string text, List<string> innerNodesText, Color innerNodesTextColor)
-        {
-            TreeNode rootNode = new TreeNode($"{DocumentRootNodesCount.ToString()}. {text}");
-            TreeNode innerNodesCollection = new TreeNode($"{DocumentRootNodesCount.ToString()}.{DocumentObjectNodesCount.ToString()} Объект {DocumentObjectNodesCount.ToString()}");
-
-            int index = 1; // Номер пункта внутренней ноды 
-
-            foreach (var str in innerNodesText)
-            {
-                innerNodesCollection.Nodes.Add($"{DocumentRootNodesCount.ToString()}.{DocumentObjectNodesCount.ToString()}.{index} {str}");
-                index++;
-            }
-            ColorNode(innerNodesCollection, innerNodesTextColor);
-
-            rootNode.Nodes.Add(innerNodesCollection);
-            documentTreeView.Nodes.Add(rootNode);
-            DocumentRootNodesCount++;
         }
 
         private void AddObjectRootNode(string text, List<(string documentNodeText, List<string> innerNodesText, Color innerNodesTextColor)> documentNodeTupleList)
@@ -142,14 +141,38 @@ namespace SAPR1
             ObjectRootNodesCount++;
         }
 
-        private void UpdateClonedDocumentNodeObjectText(TreeNode node, int rootNodeIndex, int objectIndex)
+        private void UpdateClonedDocumentNodeObjectText(TreeNode node, int rootNodeIndex, int objectIndex, TreeViewType treeViewType)
         {
-            int nodeIndex = 1;
-            foreach (TreeNode innerNode in node.Nodes)
+            if (treeViewType == TreeViewType.DocumentTreeView)
             {
-                string[] unUpdatedString = innerNode.Text.Split(' ');
-                innerNode.Text = $"{(rootNodeIndex).ToString()}.{objectIndex}.{nodeIndex} {unUpdatedString[1]}";
-                nodeIndex++;
+                int nodeIndex = 1;
+                foreach (TreeNode innerNode in node.Nodes)
+                {
+                    string[] unUpdatedString = innerNode.Text.Split(' ');
+                    
+                    innerNode.Text = $"{(rootNodeIndex).ToString()}.{objectIndex}.{nodeIndex} {unUpdatedString[1]}";
+                    nodeIndex++;
+                }
+            }
+            if (treeViewType == TreeViewType.ObjectTreeView)
+            {
+                int nodeIndex = 1;
+
+                foreach (TreeNode innerNode in node.Nodes)
+                {
+                    int innerNodeIndex = 1;
+                    string[] unUpdatedString = innerNode.Text.Split(' ');
+                    
+                    innerNode.Text = $"{(rootNodeIndex).ToString()}.{nodeIndex} {unUpdatedString[1]}";
+
+                    foreach (TreeNode moreInnerNode in innerNode.Nodes)
+                    {
+                        string[] unUpdatedInnerString = moreInnerNode.Text.Split(' ');
+                        moreInnerNode.Text = $"{(rootNodeIndex).ToString()}.{nodeIndex}.{innerNodeIndex} {unUpdatedString[1]}";
+                        innerNodeIndex++;
+                    }
+                    nodeIndex++;
+                }
             }
         }
 
@@ -176,6 +199,32 @@ namespace SAPR1
 
         private void addObjectButton_Click(object sender, EventArgs e)
         {
+            DocumentTreeViewAddObject();
+            ObjectTreeViewAddObject();
+        }
+
+        private void ObjectTreeViewAddObject()
+        {
+            ObjectRootNodesCount = objectTreeView.Nodes.Count;
+
+            TreeNode? clonedNode = objectTreeView.Nodes[objectTreeView.Nodes.Count - 1].Clone() as TreeNode;
+            
+            if (clonedNode != null)
+            {
+                clonedNode.Text = $"{(ObjectRootNodesCount + 1).ToString()}. Объект {DocumentObjectNodesCount.ToString()}";
+                UpdateClonedDocumentNodeObjectText(clonedNode, ObjectRootNodesCount + 1, DocumentObjectNodesCount, TreeViewType.ObjectTreeView);
+            }
+            else
+                return;
+
+            ObjectRootNodesCount++;
+            objectTreeView.Nodes.Add(clonedNode);
+            removeObjectButton.Enabled = true;
+            objectTreeView.ExpandAll();
+        }
+
+        private void DocumentTreeViewAddObject()
+        {
             int rootNodeIndex = 0;
             int updatedRootNodeIndex = 0;
 
@@ -190,7 +239,7 @@ namespace SAPR1
                 {
                     clonedNode.Text = $"{(rootNodeIndex + 1).ToString()}.{DocumentObjectNodesCount.ToString()} Объект {DocumentObjectNodesCount.ToString()}";
                     updatedRootNodeIndex = rootNodeIndex + 1;
-                    UpdateClonedDocumentNodeObjectText(clonedNode, updatedRootNodeIndex, DocumentObjectNodesCount);
+                    UpdateClonedDocumentNodeObjectText(clonedNode, updatedRootNodeIndex, DocumentObjectNodesCount, TreeViewType.DocumentTreeView);
                 }
                 else
                     return;
@@ -204,51 +253,40 @@ namespace SAPR1
 
         private void removeObjectButton_Click(object sender, EventArgs e)
         {
-            if (DocumentObjectNodesCount > 1)
+            if (DocumentObjectNodesCount > 1 && ObjectRootNodesCount > 1)
             {
-                if (DocumentObjectNodesCount == 2) removeObjectButton.Enabled = false;
-                int rootNodeIndex = documentTreeView.Nodes.Count - 1;
+                if (DocumentObjectNodesCount == 2 || ObjectRootNodesCount == 2) removeObjectButton.Enabled = false;
+                int documentTreeLastNodeIndex = documentTreeView.Nodes.Count - 1;
+                int objectTreeLastNodeIndex = objectTreeView.Nodes.Count - 1;
                 foreach (TreeNode node in documentTreeView.Nodes)
                 {
                     int nodesCount = documentTreeView.Nodes[node.Level].Nodes.Count;
-                    documentTreeView.Nodes[rootNodeIndex].Nodes.RemoveAt(nodesCount-1);
-                    rootNodeIndex--;
+                    documentTreeView.Nodes[documentTreeLastNodeIndex].Nodes.RemoveAt(nodesCount-1);
+                    documentTreeLastNodeIndex--;
                 }
+                objectTreeView.Nodes.RemoveAt(objectTreeLastNodeIndex);
                 DocumentObjectNodesCount--;
+                ObjectRootNodesCount--;
             }
         }
 
         private void addDocumentButton_Click(object sender, EventArgs e)
         {
             DocumentNodeTupleList.Add(("Новый документ", new List<string>() { "Неопределено", "Неизвестно"}, Color.Brown));
-            TreeCreate(TreeViewType.ObjectTreeView);
+            TreeCreate(TreeViewType.ObjectTreeView, true);
+            if (DocumentNodeTupleList.Count > 1)
+                removeDocumentButton.Enabled = true;
         }
 
         private void removeDocumentButton_Click(object sender, EventArgs e)
         {
-            DocumentNodeTupleList.RemoveAt(DocumentNodeTupleList.Count - 1);
-            TreeCreate(TreeViewType.ObjectTreeView);
-        }
-
-        private void useObjectStructureCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox? cb = sender as CheckBox;
-
-            if (cb != null && cb.Checked)
+            if (DocumentNodeTupleList.Count <= 1)
+                removeDocumentButton.Enabled = false;
+            else
             {
-                addObjectButton.Enabled = true;
-                removeObjectButton.Enabled = true;
-                addDocumentButton.Enabled = true;
-                removeDocumentButton.Enabled = true;
+                DocumentNodeTupleList.RemoveAt(DocumentNodeTupleList.Count - 1);
+                TreeCreate(TreeViewType.ObjectTreeView, true);
             }
-            if (cb != null && !cb.Checked)
-            {
-                addObjectButton.Enabled = true;
-                removeObjectButton.Enabled = true;
-                addDocumentButton.Enabled = true;
-                removeDocumentButton.Enabled = true;
-            }
-
         }
     }
 }
