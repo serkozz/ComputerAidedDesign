@@ -151,7 +151,6 @@
             this.useObjectStructureCheckBox.TabIndex = 10;
             this.useObjectStructureCheckBox.Text = "Использование\r\nструктуры\r\nпо объектам\r\n";
             this.useObjectStructureCheckBox.UseVisualStyleBackColor = true;
-            this.useObjectStructureCheckBox.CheckedChanged += new System.EventHandler(this.useObjectStructureCheckBox_CheckedChanged);
             // 
             // Form1
             // 

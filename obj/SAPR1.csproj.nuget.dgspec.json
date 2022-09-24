@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {}
+    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {}
   },
   "projects": {
-    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {
+    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectUniqueName": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
         "projectName": "SAPR1",
-        "projectPath": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectPath": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
         "packagesPath": "C:\\Users\\Сергей\\.nuget\\packages\\",
-        "outputPath": "c:\\Repositories\\SAPR1\\obj\\",
+        "outputPath": "C:\\Repositories\\SAPR1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Сергей\\AppData\\Roaming\\NuGet\\NuGet.Config",
