@@ -40,6 +40,14 @@
             this.removeDocumentButton = new System.Windows.Forms.Button();
             this.addDocumentButton = new System.Windows.Forms.Button();
             this.useObjectStructureCheckBox = new System.Windows.Forms.CheckBox();
+            this.documentDataGrid = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label_from1 = new System.Windows.Forms.Label();
+            this.label_to1 = new System.Windows.Forms.Label();
+            this.openSelectedDocButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.documentDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // createDocumentTreeButton
@@ -88,23 +96,26 @@
             // 
             // documentTreeView
             // 
-            this.documentTreeView.Location = new System.Drawing.Point(170, 49);
+            this.documentTreeView.Location = new System.Drawing.Point(170, 69);
             this.documentTreeView.Name = "documentTreeView";
-            this.documentTreeView.Size = new System.Drawing.Size(300, 692);
+            this.documentTreeView.Size = new System.Drawing.Size(300, 672);
             this.documentTreeView.TabIndex = 4;
             // 
             // objectTreeView
             // 
-            this.objectTreeView.Location = new System.Drawing.Point(476, 49);
+            this.objectTreeView.AllowDrop = true;
+            this.objectTreeView.Location = new System.Drawing.Point(476, 69);
             this.objectTreeView.Name = "objectTreeView";
-            this.objectTreeView.Size = new System.Drawing.Size(300, 692);
+            this.objectTreeView.Size = new System.Drawing.Size(300, 672);
             this.objectTreeView.TabIndex = 5;
+            this.objectTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.objectTreeView_DragDrop);
+            this.objectTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.objectTreeView_DragEnter);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(200, 28);
+            this.label1.Location = new System.Drawing.Point(170, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(234, 18);
             this.label1.TabIndex = 6;
@@ -114,7 +125,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(499, 28);
+            this.label2.Location = new System.Drawing.Point(476, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(258, 18);
             this.label2.TabIndex = 7;
@@ -152,11 +163,91 @@
             this.useObjectStructureCheckBox.Text = "Использование\r\nструктуры\r\nпо объектам\r\n";
             this.useObjectStructureCheckBox.UseVisualStyleBackColor = true;
             // 
+            // documentDataGrid
+            // 
+            this.documentDataGrid.AllowDrop = true;
+            this.documentDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.documentDataGrid.Location = new System.Drawing.Point(782, 69);
+            this.documentDataGrid.Name = "documentDataGrid";
+            this.documentDataGrid.RowHeadersWidth = 51;
+            this.documentDataGrid.RowTemplate.Height = 29;
+            this.documentDataGrid.Size = new System.Drawing.Size(788, 596);
+            this.documentDataGrid.TabIndex = 11;
+            this.documentDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.documentDataGrid_CellClick);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(782, 48);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 18);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "База данных";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(170, 12);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 18);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Откуда";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(782, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 18);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Куда";
+            // 
+            // label_from1
+            // 
+            this.label_from1.AutoSize = true;
+            this.label_from1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_from1.Location = new System.Drawing.Point(234, 12);
+            this.label_from1.Name = "label_from1";
+            this.label_from1.Size = new System.Drawing.Size(23, 18);
+            this.label_from1.TabIndex = 17;
+            this.label_from1.Text = "...";
+            // 
+            // label_to1
+            // 
+            this.label_to1.AutoSize = true;
+            this.label_to1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_to1.Location = new System.Drawing.Point(829, 12);
+            this.label_to1.Name = "label_to1";
+            this.label_to1.Size = new System.Drawing.Size(23, 18);
+            this.label_to1.TabIndex = 18;
+            this.label_to1.Text = "...";
+            // 
+            // openSelectedDocButton
+            // 
+            this.openSelectedDocButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.openSelectedDocButton.Location = new System.Drawing.Point(1418, 671);
+            this.openSelectedDocButton.Name = "openSelectedDocButton";
+            this.openSelectedDocButton.Size = new System.Drawing.Size(152, 70);
+            this.openSelectedDocButton.TabIndex = 19;
+            this.openSelectedDocButton.Text = "Открыть выбранный документ";
+            this.openSelectedDocButton.UseVisualStyleBackColor = true;
+            this.openSelectedDocButton.Click += new System.EventHandler(this.openSelectedDocButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 753);
+            this.ClientSize = new System.Drawing.Size(1582, 753);
+            this.Controls.Add(this.openSelectedDocButton);
+            this.Controls.Add(this.label_to1);
+            this.Controls.Add(this.label_from1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.documentDataGrid);
             this.Controls.Add(this.useObjectStructureCheckBox);
             this.Controls.Add(this.removeDocumentButton);
             this.Controls.Add(this.addDocumentButton);
@@ -170,6 +261,7 @@
             this.Controls.Add(this.createDocumentTreeButton);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.documentDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,5 +280,12 @@
         private Button removeDocumentButton;
         private Button addDocumentButton;
         private CheckBox useObjectStructureCheckBox;
+        private DataGridView documentDataGrid;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label_from1;
+        private Label label_to1;
+        private Button openSelectedDocButton;
     }
 }

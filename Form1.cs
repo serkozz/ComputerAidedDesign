@@ -1,25 +1,36 @@
+using System.Data;
 using System.Diagnostics;
+using System;
+using System.Linq;
 
 namespace SAPR1
 {
     public partial class Form1 : Form
     {
-        public string TestDir { get; private set; } = @"C:\TEST\";
+        public string TestDir { get; private set; } = "C:\\TEST\\";
         public int DocumentRootNodesCount { get; private set; } = 1;
         public int DocumentObjectNodesCount { get; private set; } = 1;
         public int ObjectRootNodesCount { get; private set; } = 1;
         public int ObjectNodesCount { get; private set; } = 1;
+        public bool DirectoryOnDiskCreated { get; private set; } = false;
         public List<(string, List<string>, Color)> DocumentNodeTupleList { get; private set; } = new List<(string, List<string>, Color)>();
+        public List<Document> DocumentsList { get; private set; } = new List<Document>();
+        public DataSet DataSet { get; private set; } = new DataSet("documents");
+        public DataTable DataTable { get; private set; } = new DataTable("documents");
+        public bool DataGridCreated { get; private set; }
 
         public Form1()
         {
             InitializeComponent();
             FillDocumentTuple();
+            CreateDataGridView();
+            useObjectStructureCheckBox.Checked = true;
             createTreeOnDiskButton.Enabled = false;
             addObjectButton.Enabled = false;
             removeObjectButton.Enabled = false;
             addDocumentButton.Enabled = false;
             removeDocumentButton.Enabled = false;
+            openSelectedDocButton.Enabled = false;
         }
 
         private void CreateIfMissing(string path)
@@ -168,7 +179,7 @@ namespace SAPR1
                     foreach (TreeNode moreInnerNode in innerNode.Nodes)
                     {
                         string[] unUpdatedInnerString = moreInnerNode.Text.Split(' ');
-                        moreInnerNode.Text = $"{(rootNodeIndex).ToString()}.{nodeIndex}.{innerNodeIndex} {unUpdatedString[1]}";
+                        moreInnerNode.Text = $"{(rootNodeIndex).ToString()}.{nodeIndex}.{innerNodeIndex} {unUpdatedInnerString[1]}";
                         innerNodeIndex++;
                     }
                     nodeIndex++;
@@ -186,7 +197,13 @@ namespace SAPR1
 
         private void createTreeOnDiskButton_Click(object sender, EventArgs e)
         {
-            if(Directory.Exists(TestDir))
+            CreateTreeOnDisk();
+            MessageBox.Show("Операция успешно выполнена!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void CreateTreeOnDisk()
+        {
+            if (Directory.Exists(TestDir))
                 Directory.Delete(TestDir, true);
 
             if (useObjectStructureCheckBox.Checked)
@@ -194,7 +211,7 @@ namespace SAPR1
             else
                 CallRecursive(documentTreeView);
 
-            MessageBox.Show("Операция успешно выполнена!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DirectoryOnDiskCreated = true;
         }
 
         private void addObjectButton_Click(object sender, EventArgs e)
@@ -287,6 +304,132 @@ namespace SAPR1
                 DocumentNodeTupleList.RemoveAt(DocumentNodeTupleList.Count - 1);
                 TreeCreate(TreeViewType.ObjectTreeView, true);
             }
+        }
+
+        private void objectTreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                TreeView? senderTreeView = sender as TreeView;
+                string relativePath = string.Empty;
+
+                if (senderTreeView is not null)
+                {
+                    relativePath = senderTreeView.SelectedNode.FullPath;
+                    label_to1.Text = relativePath;                
+                }
+
+                string currentNum = (DocumentsList.Count + 1).ToString().PadLeft(4, '0');
+                string fullPath = TestDir + relativePath + "\\#" + currentNum + ".pdf";
+
+                DocumentsList.Add(new Document("#" + currentNum, fullPath));
+                UpdateDocumentDataGridView();
+
+                if (DirectoryOnDiskCreated)
+                    File.Copy(label_from1.Text, fullPath, true);
+                else
+                {
+                    CreateTreeOnDisk();
+                    File.Copy(label_from1.Text, fullPath, true);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Вызвано исключение: " + ex.Message, "Ошибка!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Возникает при перетаскивании документа на ObjectTreeView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void objectTreeView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (e.Data.GetDataPresent(DataFormats.FileDrop) && Path.GetExtension(files[0]) == ".pdf" && label_to1.Text != "")
+                {
+                    e.Effect = DragDropEffects.All;
+                    label_from1.Text = files[0];
+                }
+                else e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void CreateDataGridView()
+        {
+            DataGridCreated = true;
+            DataSet.Tables.Clear();
+            DataSet.Tables.Add(DataTable);
+
+            DataColumn idColumn = new DataColumn("Id", Type.GetType("System.Int32"));
+            idColumn.Unique = true; // столбец будет иметь уникальное значение
+            idColumn.AllowDBNull = false; // не может принимать null
+
+            DataColumn documentName = new DataColumn("Имя", Type.GetType("System.String"));
+            DataColumn documentCreationTime = new DataColumn("Дата_добавления", Type.GetType("System.DateTime"));
+            DataColumn documentFullPath = new DataColumn("Полный_путь", Type.GetType("System.String"));
+
+            DataTable.Columns.Add(idColumn);
+            DataTable.Columns.Add(documentName);
+            DataTable.Columns.Add(documentCreationTime);
+            DataTable.Columns.Add(documentFullPath);
+
+            // определяем первичный ключ таблицы
+            DataTable.PrimaryKey = new DataColumn[] { DataTable.Columns["Id"] };
+
+            documentDataGrid.DataSource = DataSet.Tables["documents"];
+            documentDataGrid.Sort(documentDataGrid.Columns[1], System.ComponentModel.ListSortDirection.Ascending);
+            
+            documentDataGrid.Columns[0].Width = 35;
+            documentDataGrid.Columns[1].Width = 250;
+            documentDataGrid.Columns[2].Width = 250;
+            documentDataGrid.Columns[3].Width = 250;
+        }
+
+        private void UpdateDocumentDataGridView()
+        {
+            DataTable.Clear();
+            int id = 0;
+
+            foreach (Document doc in DocumentsList)
+            {
+                DataTable.Rows.Add(id, doc.Name, doc.CreationTime, doc.FullPath);
+                id++;
+            }
+        }
+
+        private void openSelectedDocButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataGridViewSelectedRowCollection selected = documentDataGrid.SelectedRows;
+                Document? SelectedDoc = null;
+                if (selected[0].Cells[1].Value != null)
+                {
+                    SelectedDoc = DocumentsList.Find(x => x.Name == selected[0].Cells[1].Value.ToString());
+                    Process.Start( new ProcessStartInfo { FileName = SelectedDoc.FullPath, UseShellExecute = true } );
+                }
+                else
+                    MessageBox.Show("Не выбран документ для открытия!!!", "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Возникло исключение!!!" + ex.Message, "Ошибка!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void documentDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != -1)
+                openSelectedDocButton.Enabled = false;
+            else
+                openSelectedDocButton.Enabled = true;
         }
     }
 }
