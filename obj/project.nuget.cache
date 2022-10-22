@@ -1,8 +1,28 @@
 {
   "version": 2,
-  "dgSpecHash": "hxdXRJeUTpqlWvau6MObA8r/UG2QsS5FvVabYxV6GGvtIBeP0Ch2Wm8C1PIKmiwCoAMS/vKNcOpml231JjdeqA==",
+  "dgSpecHash": "HIe/9qSR62eqYPxCLog+j3X0CPu9GJTEO280zhjgWSEs8mKFv3yaqqMiPR1z63z9x0M4N5RhStsoVuSw6dn9oA==",
   "success": true,
-  "projectFilePath": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "projectFilePath": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Сергей\\.nuget\\packages\\barcodelib\\2.4.0\\barcodelib.2.4.0.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\pdfsharp\\1.50.5147\\pdfsharp.1.50.5147.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\system.text.encoding.codepages\\7.0.0-rc.2.22472.3\\system.text.encoding.codepages.7.0.0-rc.2.22472.3.nupkg.sha512",
+    "C:\\Users\\Сергей\\.nuget\\packages\\system.text.json\\5.0.2\\system.text.json.5.0.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"PDFsharp 1.50.5147\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0-windows7.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "PDFsharp",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {}
+    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {}
   },
   "projects": {
-    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {
+    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectUniqueName": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
         "projectName": "SAPR1",
-        "projectPath": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectPath": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
         "packagesPath": "C:\\Users\\Сергей\\.nuget\\packages\\",
-        "outputPath": "c:\\Repositories\\SAPR1\\obj\\",
+        "outputPath": "C:\\Repositories\\SAPR1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,20 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "BarcodeLib": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "PdfSharp": {
+              "target": "Package",
+              "version": "[1.50.5147, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[7.0.0-rc.2.22472.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

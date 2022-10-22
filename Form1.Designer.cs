@@ -47,7 +47,10 @@
             this.label_from1 = new System.Windows.Forms.Label();
             this.label_to1 = new System.Windows.Forms.Label();
             this.openSelectedDocButton = new System.Windows.Forms.Button();
+            this.createTreeUsingAdjacencyListButton = new System.Windows.Forms.Button();
+            this.barcodeBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.documentDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barcodeBox)).BeginInit();
             this.SuspendLayout();
             // 
             // createDocumentTreeButton
@@ -64,7 +67,7 @@
             // createTreeOnDiskButton
             // 
             this.createTreeOnDiskButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.createTreeOnDiskButton.Location = new System.Drawing.Point(12, 107);
+            this.createTreeOnDiskButton.Location = new System.Drawing.Point(12, 250);
             this.createTreeOnDiskButton.Name = "createTreeOnDiskButton";
             this.createTreeOnDiskButton.Size = new System.Drawing.Size(152, 70);
             this.createTreeOnDiskButton.TabIndex = 1;
@@ -75,7 +78,7 @@
             // addObjectButton
             // 
             this.addObjectButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addObjectButton.Location = new System.Drawing.Point(12, 183);
+            this.addObjectButton.Location = new System.Drawing.Point(12, 326);
             this.addObjectButton.Name = "addObjectButton";
             this.addObjectButton.Size = new System.Drawing.Size(152, 70);
             this.addObjectButton.TabIndex = 2;
@@ -86,7 +89,7 @@
             // removeObjectButton
             // 
             this.removeObjectButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.removeObjectButton.Location = new System.Drawing.Point(12, 259);
+            this.removeObjectButton.Location = new System.Drawing.Point(12, 402);
             this.removeObjectButton.Name = "removeObjectButton";
             this.removeObjectButton.Size = new System.Drawing.Size(152, 70);
             this.removeObjectButton.TabIndex = 3;
@@ -134,7 +137,7 @@
             // removeDocumentButton
             // 
             this.removeDocumentButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.removeDocumentButton.Location = new System.Drawing.Point(12, 411);
+            this.removeDocumentButton.Location = new System.Drawing.Point(12, 554);
             this.removeDocumentButton.Name = "removeDocumentButton";
             this.removeDocumentButton.Size = new System.Drawing.Size(152, 70);
             this.removeDocumentButton.TabIndex = 9;
@@ -145,7 +148,7 @@
             // addDocumentButton
             // 
             this.addDocumentButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addDocumentButton.Location = new System.Drawing.Point(12, 335);
+            this.addDocumentButton.Location = new System.Drawing.Point(12, 478);
             this.addDocumentButton.Name = "addDocumentButton";
             this.addDocumentButton.Size = new System.Drawing.Size(152, 70);
             this.addDocumentButton.TabIndex = 8;
@@ -156,7 +159,7 @@
             // useObjectStructureCheckBox
             // 
             this.useObjectStructureCheckBox.AutoSize = true;
-            this.useObjectStructureCheckBox.Location = new System.Drawing.Point(12, 498);
+            this.useObjectStructureCheckBox.Location = new System.Drawing.Point(12, 636);
             this.useObjectStructureCheckBox.Name = "useObjectStructureCheckBox";
             this.useObjectStructureCheckBox.Size = new System.Drawing.Size(141, 64);
             this.useObjectStructureCheckBox.TabIndex = 10;
@@ -236,11 +239,32 @@
             this.openSelectedDocButton.UseVisualStyleBackColor = true;
             this.openSelectedDocButton.Click += new System.EventHandler(this.openSelectedDocButton_Click);
             // 
+            // createTreeUsingAdjacencyListButton
+            // 
+            this.createTreeUsingAdjacencyListButton.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.createTreeUsingAdjacencyListButton.Location = new System.Drawing.Point(12, 109);
+            this.createTreeUsingAdjacencyListButton.Name = "createTreeUsingAdjacencyListButton";
+            this.createTreeUsingAdjacencyListButton.Size = new System.Drawing.Size(152, 135);
+            this.createTreeUsingAdjacencyListButton.TabIndex = 20;
+            this.createTreeUsingAdjacencyListButton.Text = "Сформировать дерево каталогов в программе используя список смежности";
+            this.createTreeUsingAdjacencyListButton.UseVisualStyleBackColor = true;
+            this.createTreeUsingAdjacencyListButton.Click += new System.EventHandler(this.createTreeUsingAdjacencyListButton_Click);
+            // 
+            // barcodeBox
+            // 
+            this.barcodeBox.Location = new System.Drawing.Point(1445, 4);
+            this.barcodeBox.Name = "barcodeBox";
+            this.barcodeBox.Size = new System.Drawing.Size(125, 62);
+            this.barcodeBox.TabIndex = 21;
+            this.barcodeBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 753);
+            this.Controls.Add(this.barcodeBox);
+            this.Controls.Add(this.createTreeUsingAdjacencyListButton);
             this.Controls.Add(this.openSelectedDocButton);
             this.Controls.Add(this.label_to1);
             this.Controls.Add(this.label_from1);
@@ -262,6 +286,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.documentDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barcodeBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,5 +312,7 @@
         private Label label_from1;
         private Label label_to1;
         private Button openSelectedDocButton;
+        private Button createTreeUsingAdjacencyListButton;
+        private PictureBox barcodeBox;
     }
 }

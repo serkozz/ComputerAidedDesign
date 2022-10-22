@@ -3,6 +3,12 @@ using System.Diagnostics;
 using System;
 using System.Linq;
 
+/// <summary>
+/// Lab 4 (Adding barcode into pdf document)
+/// </summary>
+using BarcodeLib;
+using PdfSharp;
+
 namespace SAPR1
 {
     public partial class Form1 : Form
@@ -318,19 +324,24 @@ namespace SAPR1
                     relativePath = senderTreeView.SelectedNode.FullPath;
                     label_to1.Text = relativePath;                
                 }
-
+                
                 string currentNum = (DocumentsList.Count + 1).ToString().PadLeft(4, '0');
                 string fullPath = TestDir + relativePath + "\\#" + currentNum + ".pdf";
 
                 DocumentsList.Add(new Document("#" + currentNum, fullPath));
+                Barcoder barcoder = new Barcoder(fullPath, currentNum, barcodeBox);
                 UpdateDocumentDataGridView();
 
                 if (DirectoryOnDiskCreated)
+                {
                     File.Copy(label_from1.Text, fullPath, true);
+                    barcoder.BarcodeDocument();
+                }   
                 else
                 {
                     CreateTreeOnDisk();
                     File.Copy(label_from1.Text, fullPath, true);
+                    barcoder.BarcodeDocument();
                 }
 
 
@@ -430,6 +441,14 @@ namespace SAPR1
                 openSelectedDocButton.Enabled = false;
             else
                 openSelectedDocButton.Enabled = true;
+        }
+
+        private void createTreeUsingAdjacencyListButton_Click(object sender, EventArgs e)
+        {
+            AdjacencyListTreeCreationForm adjacencyListTreeCreationForm = new AdjacencyListTreeCreationForm(this);
+            adjacencyListTreeCreationForm.Location = this.Location;
+            this.Hide();
+            adjacencyListTreeCreationForm.Show();
         }
     }
 }
