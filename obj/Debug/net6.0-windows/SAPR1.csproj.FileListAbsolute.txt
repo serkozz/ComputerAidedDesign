@@ -4,8 +4,6 @@ C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.runtimeconfig.json
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.dll
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\SAPR1.pdb
 C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.AssemblyReference.cache
-C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Form1.resources
-C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.GenerateResource.cache
 C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.GeneratedMSBuildEditorConfig.editorconfig
 C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.AssemblyInfoInputs.cache
 C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.AssemblyInfo.cs
@@ -21,7 +19,14 @@ C:\Repositories\SAPR1\bin\Debug\net6.0-windows\PdfSharp.dll
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\de\PdfSharp.Charting.resources.dll
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\de\PdfSharp.resources.dll
 C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.CopyComplete
-C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.AdjacencyListTreeCreationForm.resources
-C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Properties.Resources.resources
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\System.Text.Encoding.CodePages.dll
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\System.Data.SqlClient.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\win-x64\native\sni.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\win-x86\native\sni.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Form1.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Properties.Resources.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.GenerateResource.cache
