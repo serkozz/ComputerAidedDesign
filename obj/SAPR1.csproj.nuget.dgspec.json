@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[1.50.5147, )"
             },
+            "QuickChart": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Svg": {
               "target": "Package",
               "version": "[3.4.4, )"

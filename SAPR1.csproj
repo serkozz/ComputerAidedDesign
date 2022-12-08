@@ -5,10 +5,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>8618, 8604, 8622, 8601, 3026, 8602, 8600</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BarcodeLib" Version="2.4.0" />
     <PackageReference Include="PdfSharp" Version="1.50.5147" />
+    <PackageReference Include="QuickChart" Version="2.3.0" />
     <PackageReference Include="Svg" Version="3.4.4" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0-rc.2.22472.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />

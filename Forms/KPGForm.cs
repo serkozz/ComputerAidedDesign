@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Svg;
 using SAPR1.Forms;
 using SAPR1.Types;
+using QuickChart;
 
 namespace SAPR1.Forms
 {
@@ -37,12 +38,19 @@ namespace SAPR1.Forms
             CreateDataGridView();
             CreateTreeView();
             SetDataGridValue();
+            CreateCharts();
             MainForm = mainForm;
             LoadSvg();
             treeView.ExpandAll();
             dateLabel.Text = DateTime.Now.ToString();
             dateLabel.ForeColor = Color.Gray;
             dataGridView.MouseWheel += dataGridView_MouseWheel;
+            this.FormClosed += formClosed;
+        }
+
+        private void formClosed(object? sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void CreateDataGridView()
@@ -55,22 +63,30 @@ namespace SAPR1.Forms
             idColumn.AllowDBNull = false; // не может принимать null
 
             DataColumn nameColumn = new DataColumn("Имя", Type.GetType("System.String"));
-            DataColumn finishTimeColumn = new DataColumn("Дата_завершения", Type.GetType("System.String"));
+            DataColumn finishTimeColumn = new DataColumn("Дата завершения", Type.GetType("System.String"));
             DataColumn partialColumn = new DataColumn("Частично", Type.GetType("System.String"));
             DataColumn daysColumn = new DataColumn("Дни", Type.GetType("System.String"));
-
+            DataColumn priceColumn = new DataColumn("Затраты (тыс.руб)");
 
             DataTable.Columns.Add(idColumn);
             DataTable.Columns.Add(nameColumn);
             DataTable.Columns.Add(finishTimeColumn);
             DataTable.Columns.Add(partialColumn);
             DataTable.Columns.Add(daysColumn);
+            DataTable.Columns.Add(priceColumn);
 
             // определяем первичный ключ таблицы
             DataTable.PrimaryKey = new DataColumn[] { DataTable.Columns["Id"] };
 
             dataGridView.DataSource = DataSet.Tables["datatable"];
             dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Ascending);
+
+            dataGridView.Columns[0].Width = 100;
+            dataGridView.Columns[1].Width = 100;
+            dataGridView.Columns[2].Width = 100;
+            dataGridView.Columns[3].Width = 100;
+            dataGridView.Columns[4].Width = 100;
+            dataGridView.Columns[5].Width = 100;
         }
 
         private void CreateTreeView()
@@ -128,11 +144,125 @@ namespace SAPR1.Forms
             treeView.Nodes.Add(asphaltNode);
         }
 
+        // TODO: Вынести чартокрейтер в новый класс !!!!!
+        private void CreateCharts()
+        {
+            CreateFundingChart();
+            CreateCumulativeSumChart();
+            CreateFinancingLimitChart();
+        }
+
+        private void ClearCharts()
+        {
+            fundingChartPictureBox.Image = null;
+            cumulativeSumChartPictureBox.Image = null;
+            financingLimitChartPictureBox.Image = null;
+        }
+
+        private void CreateFinancingLimitChart()
+        {
+            string dataString = string.Empty;
+            string labelsList = string.Empty;
+            int financingLimit = 100000;
+
+            foreach (DataRow row in DataTable.Rows)
+            {
+                financingLimit -= int.Parse(row.ItemArray[5].ToString());
+                dataString += $"{financingLimit.ToString()}, ";
+                labelsList += $"{row.ItemArray[0].ToString()}, ";
+            }
+
+            Chart fundingChart = new Chart();
+            fundingChart.Width = 500;
+            fundingChart.Height = 300;
+            fundingChart.Config = $@"{{
+            type: 'bar',
+            data: {{
+                labels: [{labelsList}],
+                datasets: [{{
+                label: 'Лимит финансирования (тыс. руб)',
+                data: [{dataString}]
+                }}]
+            }}
+            }}";
+            Console.WriteLine(fundingChart.GetUrl());
+            byte[] imageBytes = fundingChart.ToByteArray();
+
+            MemoryStream ms = new MemoryStream(imageBytes);
+            financingLimitChartPictureBox.Image = Image.FromStream(ms);
+            ms.Close();
+        }
+
+        private void CreateCumulativeSumChart()
+        {
+            string dataString = string.Empty;
+            string labelsList = string.Empty;
+            int cumulativeSum = 0;
+
+            foreach (DataRow row in DataTable.Rows)
+            {
+                cumulativeSum += int.Parse(row.ItemArray[5].ToString());
+                dataString += $"{cumulativeSum.ToString()}, ";
+                labelsList += $"{row.ItemArray[0].ToString()}, ";
+            }
+
+            Chart fundingChart = new Chart();
+            fundingChart.Width = 500;
+            fundingChart.Height = 300;
+            fundingChart.Config = $@"{{
+            type: 'bar',
+            data: {{
+                labels: [{labelsList}],
+                datasets: [{{
+                label: 'Сумма нарастающим итогом (кумулятивная сумма) (тыс. руб)',
+                data: [{dataString}]
+                }}]
+            }}
+            }}";
+            Console.WriteLine(fundingChart.GetUrl());
+            byte[] imageBytes = fundingChart.ToByteArray();
+
+            MemoryStream ms = new MemoryStream(imageBytes);
+            cumulativeSumChartPictureBox.Image = Image.FromStream(ms);
+            ms.Close();
+        }
+        private void CreateFundingChart()
+        {
+            string dataString = string.Empty;
+            string labelsList = string.Empty;
+
+            foreach (DataRow row in DataTable.Rows)
+            {
+                dataString += $"{row.ItemArray[5].ToString()}, ";
+                labelsList += $"{row.ItemArray[0].ToString()}, ";
+            }
+
+            Chart fundingChart = new Chart();
+            fundingChart.Width = 500;
+            fundingChart.Height = 300;
+            fundingChart.Config = $@"{{
+            type: 'bar',
+            data: {{
+                labels: [{labelsList}],
+                datasets: [{{
+                label: 'График финансирования (тыс. руб)',
+                data: [{dataString}]
+                }}]
+            }}
+            }}";
+            Console.WriteLine(fundingChart.GetUrl());
+            byte[] imageBytes = fundingChart.ToByteArray();
+
+            MemoryStream ms = new MemoryStream(imageBytes);
+            fundingChartPictureBox.Image = Image.FromStream(ms);
+            ms.Close();
+        }
+
         private void SetDataGridValue()
         {
-            DataTable.Rows.Add("1", "_1.6", "03.12.2022", "", duration);
-            DataTable.Rows.Add("2", "_1.4", "05.12.2022", "", duration);
-            DataTable.Rows.Add("3", "_1.5", "08.12.2022", "", duration);
+            DataTable.Rows.Add("1", "_1.6", "03.12.2022", "", duration, Random.Shared.Next(0, 10000));
+            DataTable.Rows.Add("2", "_1.4", "05.12.2022", "", duration, Random.Shared.Next(0, 10000));
+            DataTable.Rows.Add("3", "_1.5", "08.12.2022", "", duration, Random.Shared.Next(0, 10000));
         }
 
         private void LoadSvg()
@@ -172,7 +302,7 @@ namespace SAPR1.Forms
                 SVGItem.Fill = new SvgColourServer(execColor);
                 pictureBox.Image = svgDocument.Draw();
                 startDate = startDate.AddDays(1);
-                DataTable.Rows.Add((dataGridView.Rows.Count + 1).ToString(), SVGName, startDate.ToString("dd-MM-yyyy"), "", duration);
+                DataTable.Rows.Add((dataGridView.Rows.Count + 1).ToString(), SVGName, startDate.ToString("dd-MM-yyyy"), "", ((byte)duration), Random.Shared.Next(0, 10000));
             }
         }
 
@@ -180,7 +310,7 @@ namespace SAPR1.Forms
         {
             if (e.KeyCode == Keys.Down)
                 FillCurrentElement(dataGridView.CurrentCell.RowIndex);
-            
+
             if (e.KeyCode == Keys.Up)
             {
                 SVGName = dataGridView.Rows[dataGridView.CurrentCell.RowIndex].Cells[1].Value.ToString();
@@ -237,11 +367,13 @@ namespace SAPR1.Forms
                 }
             }
             dataGridView.Rows[dataGridView.Rows.Count - 1].Selected = false;
+            CreateCharts();
         }
 
         private void deleteGridViewButton_Click(object sender, EventArgs e)
         {
             DataTable.Rows.Clear();
+            CreateCharts();
             LoadSvg();
             playButton.Enabled = false;
         }

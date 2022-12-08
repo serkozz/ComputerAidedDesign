@@ -44,3 +44,8 @@ C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\osx-x64\native\libpcre.1
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\osx-x64\native\libpixman-1.0.dylib
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\osx-x64\native\libpng16.16.dylib
 C:\Repositories\SAPR1\bin\Debug\net6.0-windows\runtimes\osx-x64\native\libtiff.5.dylib
+C:\Repositories\SAPR1\bin\Debug\net6.0-windows\QuickChart.dll
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Forms.KPGForm.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.MainForm.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.Properties.Resources.resources
+C:\Repositories\SAPR1\obj\Debug\net6.0-windows\SAPR1.csproj.GenerateResource.cache
