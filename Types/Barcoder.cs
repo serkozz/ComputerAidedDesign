@@ -12,10 +12,6 @@ public class Barcoder
     public string BarcodeText { get; private set; } = DateTime.Now.ToString("dd:MM:yyyy");
     public string NumStruct { get; private set; } = string.Empty;
     public Image BarcodeImage { get; private set; }
-    public int XPosition { get; private set; } = 0;
-    public int YPosition { get; private set; } = 0;
-    public int BarcodeWidth { get; private set; } = 100;
-    public int BarcodeHeight { get; private set; } = 100;
 
     private PictureBox BarcodePictureBox;
 
@@ -44,11 +40,11 @@ public class Barcoder
             XGraphics gfx = XGraphics.FromPdfPage(page);
             XFont xFont = new XFont("Calibri", 8, XFontStyle.Regular);
 
-            XPoint barcodePoint = new XPoint(300, 5);
+            XPoint barcodePoint = new XPoint(200, 10);
 
             gfx.DrawImage(image, barcodePoint);
 
-            gfx.DrawString("#" + RegNum + " " + BarcodeText, xFont, XBrushes.Black, barcodePoint.X, barcodePoint.Y + 34);
+            gfx.DrawString("#" + RegNum + " " + BarcodeText, xFont, XBrushes.Black, barcodePoint.X, barcodePoint.Y);
             document.Save(InFile);
         }
     }

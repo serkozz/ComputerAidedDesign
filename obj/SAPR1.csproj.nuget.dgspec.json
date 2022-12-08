@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {}
+    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {}
   },
   "projects": {
-    "C:\\Repositories\\SAPR1\\SAPR1.csproj": {
+    "c:\\Repositories\\SAPR1\\SAPR1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectUniqueName": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
         "projectName": "SAPR1",
-        "projectPath": "C:\\Repositories\\SAPR1\\SAPR1.csproj",
+        "projectPath": "c:\\Repositories\\SAPR1\\SAPR1.csproj",
         "packagesPath": "C:\\Users\\Сергей\\.nuget\\packages\\",
-        "outputPath": "C:\\Repositories\\SAPR1\\obj\\",
+        "outputPath": "c:\\Repositories\\SAPR1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Сергей\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -47,6 +47,10 @@
             "PdfSharp": {
               "target": "Package",
               "version": "[1.50.5147, )"
+            },
+            "Svg": {
+              "target": "Package",
+              "version": "[3.4.4, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",

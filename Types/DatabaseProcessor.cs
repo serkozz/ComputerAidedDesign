@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 public class DatabaseProcessor
@@ -47,14 +42,6 @@ public class DatabaseProcessor
     public void GetDocumentPDFFromDB(string DBpathToDoc, string localPathToDoc)
     {
         connection.Open();
-        // string[] pathSeparated = DBpathToDoc.Split("\\");
-        // string path = string.Empty;
-
-        // foreach (string str in pathSeparated)
-        // {
-        //     path += str + @"\";
-        // }
-
         string cmdText = $"SELECT document_byte_array FROM Documents WHERE document_full_path = N'{DBpathToDoc}'";
 
         FileStream fs = new FileStream(localPathToDoc, FileMode.OpenOrCreate, FileAccess.ReadWrite);
